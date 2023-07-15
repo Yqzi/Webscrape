@@ -1,19 +1,26 @@
 from bs4 import BeautifulSoup
 import requests
 
-url = "https://quotes.toscrape.com"
+url = "https://www.ebay.ca/deals?_trkparms=pageci%3Ae825a93c-2342-11ee-96bd-3e8771155599%7Cparentrq%3A5af3d44a1890aaee4d045db4fffdb7a7%7Ciid%3A1"
+
 
 web = requests.get(url)
 html = BeautifulSoup(web.text, "html.parser")
-quotes = html.findAll("span", attrs={"class":"text"})
-authors = html.findAll('small', attrs={"class":"author"})
+reviews = html.findAll("span", attrs={"class":"SECONDARY"})
+names = html.findAll('span', attrs={"itemprop":"name"})
+prices = html.findAll('span', attrs={"itemprop":"price"})
+
+
+
 
 
 with open("data.csv", "w+") as csvfile:
-    csvfile.write('Quotes')
-    csvfile.write('|9064| Authors')
+    csvfile.write('Name')
+    csvfile.write(' |9064| Price')
 
 
-    for quotes, authors in zip(quotes, authors):
-        csvfile.write("\n" + quotes.text)
-        csvfile.write('|9064| ' + authors.text)
+
+
+    for name, price in zip(names, prices):
+        csvfile.write("\n" + name.text)
+        csvfile.write(' |9064| ' + price.text)
