@@ -22,5 +22,5 @@ class Y:
 if __name__ == "__main__":
     y: Y = Y()
     x: X = X(1, 2, y.yMethod)
-    print(x.callback)
-    x.callback()
+    z = y.yMethod
+    z()
